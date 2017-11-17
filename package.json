@@ -10,16 +10,12 @@
     "start": "webpack-dev-server --open"
   },
   "dependencies": {
-    "autoprefixer-loader": "^3.2.0",
     "axios": "^0.17.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "css-loader": "^0.28.1",
-    "history": "^4.7.2",
-    "lodash": "^4.17.4",
+    "css-loader": "^0.28.7",
+    "history": "^4.6.3",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.5",
-    "react-router": "^4.2.0",
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",

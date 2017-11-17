@@ -1,17 +1,20 @@
 import React from 'react';
 import Header from '../common/Header';
 import { connect } from 'react-redux';
+import Nav from '../common/Nav';
+import Footer from '../common/Footer';
 
 class ContactPage extends React.Component {
   render() {
     return (
       <div>
-        <Header component="Contact" title="Contact Me" subheading="Have questions? I have answers."/>
+        <Nav user={this.props.user}/>
+        <Header component="Contact" title="Contact Me" subheading="Have questions? I have answers." />
         <div className="container">
           <div className="row">
             <div className="col-lg-8 col-md-10 mx-auto">
               <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
-              <form name="sentMessage" id="contactForm" novalidate>
+              <form name="sentMessage" id="contactForm" noValidate>
                 <div className="control-group">
                   <div className="form-group floating-label-form-group controls">
                     <label>Name</label>
@@ -49,10 +52,16 @@ class ContactPage extends React.Component {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
 }
-
-const connectedContactPage = connect()(ContactPage);
+function mapStateToProps(state) {
+  const { user } = state.authentication;
+  return {
+      user,
+  };
+}
+const connectedContactPage = connect(mapStateToProps)(ContactPage);
 export { connectedContactPage as ContactPage };

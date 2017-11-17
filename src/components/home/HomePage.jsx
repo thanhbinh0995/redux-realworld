@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Background from '../../../style/img/home-bg.jpg';
 import Header from '../common/Header';
-
+import Nav from '../common/Nav';
+import Footer from '../common/Footer';
 import { userActions } from '../../actions';
 
 class HomePage extends React.Component {
@@ -25,6 +25,7 @@ class HomePage extends React.Component {
         const { user, articles } = this.props;
         return (
             <div>
+                <Nav user={user}/>
                 <Header component="Home" title="Clean Blog" subheading="A Blog Theme by Start Bootstrap" />
                 <div className="container">
                     <div className="row">
@@ -37,6 +38,7 @@ class HomePage extends React.Component {
                         </div>
                     </div>
                 </div>
+                <Footer />
             </div>
         );
     }

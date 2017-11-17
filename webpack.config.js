@@ -1,4 +1,5 @@
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/index.jsx',
@@ -23,12 +24,13 @@ module.exports = {
                 test: /\.css$/,
                 loaders: ['style-loader', 'css-loader', 'autoprefixer-loader?browsers=last 2 versions'],
             },
-            { test: /\.(jpg|png|woff|woff2|eot|ttf|svg|gif)$/, loader: 'url-loader?name=style/img/[name].[ext]' }
+            { test: /\.(jpg|png|woff|woff2|eot|ttf|svg|gif)$/, loader: 'url-loader?name=src/style/img/[name].[ext]' }            
         ]
     },
     devServer: {
         historyApiFallback: true,
         contentBase: './',
+        disableHostCheck: true,
         port: 3000
     }
 }

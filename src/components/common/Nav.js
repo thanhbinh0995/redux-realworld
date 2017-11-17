@@ -6,19 +6,21 @@ const LoggedOutView = props => {
     return (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <a className="nav-link" href="/">Home</a>
+          <Link className="nav-link" to="/">Home</Link>
+
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/about">About</a>
+          <Link className="nav-link" to="/about">About</Link>
+
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/contact">Contact</a>
+          <Link className="nav-link" to="/contact">Contact</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/login">Sign In</a>
+          <Link className="nav-link" to="/login">Sign In</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/register">Sign Up</a>
+          <Link className="nav-link" to="/register">Sign Up</Link>
         </li>
       </ul>
     );
@@ -31,16 +33,21 @@ const LoggedInView = props => {
     return (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <a className="nav-link" href="/">Home</a>
+          <Link className="nav-link" to="/">Home</Link>
+
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/about">About</a>
+          <Link className="nav-link" to="/about">About</Link>
+
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/contact">Contact</a>
+          <Link className="nav-link" to="/contact">Contact</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/login">Logout</a>
+          <Link className="nav-link" to="/post">New Post</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/profile">({props.currentUser.username})Profile</Link>
         </li>
       </ul>
     );
@@ -60,11 +67,19 @@ export default class Nav extends React.Component {
             <i className="fa fa-bars"></i>
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
-            <LoggedOutView currentUser={this.props.currentUser} />
-            <LoggedInView currentUser={this.props.currentUser} />
+            {this.props.user ? <LoggedInView currentUser={this.props.user} /> : <LoggedOutView />}
           </div>
         </div>
       </nav>
     );
   }
 }
+// function mapStateToProps(state) {
+//   const { user } = state.authentication;
+//   return {
+//       user,
+//   };
+// }
+
+// const connectedNav = connect(mapStateToProps)(Nav);
+// export { connectedHomePage as Nav };
