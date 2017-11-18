@@ -1,10 +1,17 @@
 import React from "react";
 import {connect} from "react-redux";
+import {bindActionCreators} from 'redux';
 import Header from "../common/Header";
 import Nav from "../common/Nav";
 import Footer from "../common/Footer";
+import {loadArticles} from '../../actions/articleAction'
+const Promise = global.Promise;
 
 class HomePage extends React.Component {
+  componentWillMount(){
+    this.props.loadArticles();
+  }
+
   renderArticles(articles) {
     return articles.map((article, index) => {
       return (
@@ -21,6 +28,7 @@ class HomePage extends React.Component {
 
   render() {
     const {user, articles} = this.props;
+    // console.log(articles);
     return (
         <div>
           <Nav user={user}/>
@@ -51,5 +59,9 @@ function mapStateToProps(state) {
   };
 }
 
-const connectedHomePage = connect(mapStateToProps)(HomePage);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({loadArticles}, dispatch);
+}
+
+const connectedHomePage = connect(mapStateToProps, mapDispatchToProps)(HomePage);
 export {connectedHomePage as HomePage};

@@ -35,7 +35,6 @@ class App extends React.Component {
             <Route path="/about" component={AboutPage} />
             <Route path="/contact" component={ContactPage} />
             <Route exact path="/profile" component={ProfilePage} />
-            <Route path="/profile/edit" component={ProfileEditPage} />
           </div>
         </Router>
       </div>
