@@ -5,7 +5,6 @@ import Header from "../common/Header";
 import Nav from "../common/Nav";
 import Footer from "../common/Footer";
 import {loadArticles} from '../../actions/articleAction'
-const Promise = global.Promise;
 
 class HomePage extends React.Component {
   componentWillMount(){
@@ -28,7 +27,6 @@ class HomePage extends React.Component {
 
   render() {
     const {user, articles} = this.props;
-    // console.log(articles);
     return (
         <div>
           <Nav user={user}/>

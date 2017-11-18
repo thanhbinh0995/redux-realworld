@@ -4,7 +4,7 @@ import axios from "axios";
 const ROOT_URL = 'https://conduit.productionready.io/api';
 
 export function loadArticles() {  
-  return function action(dispatch) {
+  return (dispatch) => {
     const url = `${ROOT_URL}/articles?limit=10`;
     const request = axios.get(url);
     return request.then(request => {
