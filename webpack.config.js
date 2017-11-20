@@ -1,36 +1,53 @@
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const polyfill = require('babel-polyfill');
+const path = require('path');
+const HotModuleReplacementPlugin = require('webpack').HotModuleReplacementPlugin;
 
-module.exports = {
-    entry: './src/index.jsx',
-    output: {
-        path: path.resolve('dist'),
-        filename: 'bundle.js'
-    },
-    resolve: {
-        extensions: ['.js', '.jsx']
-    },
-    module: {
-        loaders: [
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015', 'stage-3']
-                }
+module.exports = () => ({
+  entry: [
+    'babel-polyfill',
+    'react-hot-loader/patch',
+    path.join(__dirname, 'src/index.js'),
+  ],
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js'
+  },
+  devtool: '#eval-source-map',
+  plugins: [
+    new HotModuleReplacementPlugin(),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        include: path.join(__dirname, 'src'),
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              babelrc: false,
+              presets: [
+                ['es2015', { modules: false }],
+                'react',
+                'stage-2',
+              ],
+              plugins: ['react-hot-loader/babel'],
             },
-            {
-                test: /\.css$/,
-                loaders: ['style-loader', 'css-loader', 'autoprefixer-loader?browsers=last 2 versions'],
-            },
-            { test: /\.(jpg|png|woff|woff2|eot|ttf|svg|gif)$/, loader: 'url-loader?name=src/style/img/[name].[ext]' }            
-        ]
-    },
-    devServer: {
-        historyApiFallback: true,
-        contentBase: './',
-        disableHostCheck: true,
-        port: 3000
-    }
-}
+          },
+        ],
+      },
+      {
+        test: /\.(css|scss)$/,
+        loader: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      { test: /\.(jpg|png|woff|woff2|eot|ttf|svg|gif)$/, loader: 'url-loader?name=src/style/img/[name].[ext]' }
+    ],
+  },
+  devServer: {
+    historyApiFallback: true,
+    contentBase: './src',
+    hot: true,
+    port: 3000
+  },
+});

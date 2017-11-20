@@ -1,7 +1,7 @@
 import React from "react";
-import Contact from "../../../style/img/contact-bg.jpg";
-import About from "../../../style/img/about-bg.jpg";
-import Home from "../../../style/img/home-bg.jpg";
+import Contact from "../../style/img/contact-bg.jpg";
+import About from "../../style/img/about-bg.jpg";
+import Home from "../../style/img/home-bg.jpg";
 
 export default class Header extends React.Component {
   constructor(props) {

@@ -1,13 +1,13 @@
 import * as types from "./actionTypes";
 import axios from "axios";
 
-const ROOT_URL = 'https://conduit.productionready.io/api';
+const API_ROOT = 'https://conduit.productionready.io/api';
 
 export function loadArticles() {  
   return (dispatch) => {
-    const url = `${ROOT_URL}/articles?limit=10`;
-    const request = axios.get(url);
-    return request.then(request => {
+    const url = `${API_ROOT}/articles?limit=10`;
+    return axios.get(url)
+    .then(request => {
       dispatch(loadArticlesSuccess(request.data.articles));
     }).catch(error => {
       dispatch(loadArticlesError(error));

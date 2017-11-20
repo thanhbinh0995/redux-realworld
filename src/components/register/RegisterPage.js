@@ -1,9 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import Home from "../../../style/img/home-bg.jpg";
+import Home from "../../style/img/home-bg.jpg";
 import {userActions} from "../../actions";
-import Nav from "../common/Nav";
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -49,7 +48,6 @@ class RegisterPage extends React.Component {
     const {user, submitted} = this.state;
     return (
         <div>
-          <Nav />
           <header className="masthead" style={{backgroundImage: 'url(' + Home + ')'}}>
             <div className="overlay"></div>
             <div className="container">

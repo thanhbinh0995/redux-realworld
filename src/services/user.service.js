@@ -1,4 +1,5 @@
 import {authHeader} from "../helpers";
+const API_URL = 'https://conduit.productionready.io/api';
 
 export const userService = {
   login,
@@ -10,6 +11,16 @@ export const userService = {
   delete: _delete
 };
 
+function register(user) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(user)
+  };
+
+  return fetch(`${API_URL}/users/login`, requestOptions).then(handleResponse);
+}
+
 function login(email, password) {
   const requestOptions = {
     method: 'POST',
@@ -17,7 +28,7 @@ function login(email, password) {
     body: JSON.stringify({email, password})
   };
 
-  return fetch('/users/authenticate', requestOptions)
+  return fetch(`${API_URL}/users/login`, requestOptions)
       .then(response => {
         if (!response.ok) {
           return Promise.reject(response.statusText);
@@ -31,7 +42,6 @@ function login(email, password) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('user', JSON.stringify(user));
         }
-
         return user;
       });
 }
@@ -59,15 +69,6 @@ function getById(id) {
   return fetch('/users/' + id, requestOptions).then(handleResponse);
 }
 
-function register(user) {
-  const requestOptions = {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(user)
-  };
-
-  return fetch('/users/register', requestOptions).then(handleResponse);
-}
 
 function update(user) {
   const requestOptions = {

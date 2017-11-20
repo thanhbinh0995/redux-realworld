@@ -8,7 +8,6 @@ class AboutPage extends React.Component {
   render() {
     return (
         <div>
-          <Nav user={this.props.user}/>
           <Header component="About" title="About Me" subheading="This is what I do."/>
           <div className="container">
             <div className="row">
@@ -28,7 +27,6 @@ class AboutPage extends React.Component {
               </div>
             </div>
           </div>
-          <Footer />
         </div>
     );
   }

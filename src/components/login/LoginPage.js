@@ -1,17 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
+import {bindActionCreators} from 'redux';
 import { userActions } from "../../actions";
-import ContactBG from "../../../style/img/contact-bg.jpg";
-import Nav from "../common/Nav";
-import Footer from "../common/Footer";
+import ContactBG from "../../style/img/contact-bg.jpg";
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.props.dispatch(userActions.logout());
+    // this.props.dispatch(userActions.logout());
 
     this.state = {
       email: '',
@@ -44,7 +42,6 @@ class LoginPage extends React.Component {
     const { email, password, submitted } = this.state;
     return (
       <div>
-        <Nav />
         <header className="masthead" style={{ backgroundImage: 'url(' + ContactBG + ')' }}>
           <div className="overlay"></div>
           <div className="container">
@@ -88,7 +85,6 @@ class LoginPage extends React.Component {
             </div>
           </div>
         </header>
-        <Footer />
       </div>
     );
   }
@@ -101,6 +97,10 @@ function mapStateToProps(state) {
     loggingIn,
     alert
   };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({loadArticles}, dispatch);
 }
 
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);

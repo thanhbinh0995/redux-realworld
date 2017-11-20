@@ -8,7 +8,6 @@ class ContactPage extends React.Component {
   render() {
     return (
         <div>
-          <Nav user={this.props.user}/>
           <Header component="Contact" title="Contact Me" subheading="Have questions? I have answers."/>
           <div className="container">
             <div className="row">
@@ -57,7 +56,6 @@ class ContactPage extends React.Component {
               </div>
             </div>
           </div>
-          <Footer />
         </div>
     );
   }
