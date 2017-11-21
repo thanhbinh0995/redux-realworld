@@ -1,5 +1,6 @@
-import {authHeader} from "../helpers";
-const API_URL = 'https://conduit.productionready.io/api';
+import { authHeader } from "../helpers";
+const API_ROOT = 'https://conduit.productionready.io/api';
+import axios from 'axios';
 
 export const userService = {
   login,
@@ -14,36 +15,21 @@ export const userService = {
 function register(user) {
   const requestOptions = {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user)
   };
-
-  return fetch(`${API_URL}/users/login`, requestOptions).then(handleResponse);
+  // const res = await axios.post(`${API_ROOT}/users/login`, { user });  
+  return fetch(`${API_ROOT}/users/login`, requestOptions).then(handleResponse);
 }
 
 function login(email, password) {
   const requestOptions = {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({email, password})
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
   };
-
-  return fetch(`${API_URL}/users/login`, requestOptions)
-      .then(response => {
-        if (!response.ok) {
-          return Promise.reject(response.statusText);
-        }
-
-        return response.json();
-      })
-      .then(user => {
-        // login successful if there's a jwt token in the response
-        if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('user', JSON.stringify(user));
-        }
-        return user;
-      });
+  const user = { email, password };
+  return axios.post(`${API_ROOT}/users/login`, { user }, requestOptions);
 }
 
 function logout() {
@@ -73,7 +59,7 @@ function getById(id) {
 function update(user) {
   const requestOptions = {
     method: 'PUT',
-    headers: {...authHeader(), 'Content-Type': 'application/json'},
+    headers: { ...authHeader(), 'Content-Type': 'application/json' },
     body: JSON.stringify(user)
   };
 

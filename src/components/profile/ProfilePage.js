@@ -20,7 +20,6 @@ class ProfilePage extends React.Component {
     const {user} = this.props;
     return (
         <div>
-          <Nav user={user}/>
           <div className="container" style={{paddingTop: "100px"}}>
             <a href="login">Logout</a>
             <form onSubmit={this.submitForm}>
@@ -74,9 +73,7 @@ class ProfilePage extends React.Component {
               </fieldset>
             </form>
           </div>
-          <Footer />
         </div>
-
     );
   }
 }

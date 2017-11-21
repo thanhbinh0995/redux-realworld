@@ -1,4 +1,4 @@
-import * as types from "./actionTypes";
+import * as types from "../constants/articles.constants";
 import axios from "axios";
 
 const API_ROOT = 'https://conduit.productionready.io/api';

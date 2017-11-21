@@ -3,6 +3,7 @@ import { userService } from "../services";
 import { alertActions } from "./";
 import { history } from "../helpers";
 import axios from 'axios';
+import {withRouter} from "react-router-dom";
 const API_ROOT = 'https://conduit.productionready.io/api';
 
 export const userActions = {
@@ -11,48 +12,19 @@ export const userActions = {
 };
 
 function login(email, password) {
-  let user = JSON.stringify({ email, password })
-  let self = this;
-  let payload = {
-    email, password
-  }
-  axios.post(`${API_ROOT}/users/login`, payload)
-    .then(function (response) {
-      console.log(response);
-      if (response.data.code == 200) {
-        console.log("Login successfull");
+  return dispatch => {
+    dispatch(request({ email }));
+    userService.login(email, password)
+      .then( user => {
+        dispatch(loginSuccess(user));
         history.push('/');
-      }
-      else if (response.data.code == 204) {
-        console.log("Username password do not match");
-        alert("username password do not match")
-      }
-      else {
-        console.log("Username does not exists");
-        alert("Username does not exist");
-      }
-    })
-    .catch(function (error) {
-      console.log(error.response);
-    });
-
-
-  // return (dispatch) => {
-  //   const url = `${API_ROOT}/users/login`;
-  //   return axios.post(url, user, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     }
-  //   })
-  //     .then(request => {
-  //       console.log(request);
-  //       dispatch(loginSuccess(user));
-  //       history.push('/');
-  //     }).catch(error => {
-  //       dispatch(loginFailure(error));
-  //       dispatch(alertActions.error(error));
-  //     });
-  // }
+        this.props.history.push("/");
+      })
+      .catch(error => {
+        dispatch(loginFailure(error.response.data));
+        dispatch(alertActions.error("Email or password not correct"));
+      });
+  };
 
   function request(user) {
     return { type: userConstants.LOGIN_REQUEST, user }

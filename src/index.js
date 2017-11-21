@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import 'normalize.css';
 import Nav from './components/common/Nav';
 import Footer from './components/common/Footer';
 import Routes from './routes/';

@@ -1,4 +1,4 @@
-import * as types from "../actions/actionTypes";
+import * as types from "../constants/articles.constants";
 
 export default function articleReducer(state = [], action) {
   switch (action.type) {
