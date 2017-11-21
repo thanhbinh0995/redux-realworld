@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {PrivateRoute} from "../components/PrivateRoute";
-import { HomePage } from "../components/home";
-import { LoginPage } from "../components/login";
+// import { HomePage } from "../components/home";
+import HomePage from '../components/home/HomePage';
+import LoginPage from "../components/login/LoginPage";
 import { RegisterPage } from "../components/register";
 import { AboutPage } from "../components/about/AboutPage";
 import { ContactPage } from "../components/contact/ContactPage";

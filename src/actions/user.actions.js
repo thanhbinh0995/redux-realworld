@@ -3,22 +3,24 @@ import { userService } from "../services";
 import { alertActions } from "./";
 import { history } from "../helpers";
 import axios from 'axios';
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 const API_ROOT = 'https://conduit.productionready.io/api';
 
 export const userActions = {
   login,
-  logout
+  logout,
+  register
 };
 
 function login(email, password) {
   return dispatch => {
     dispatch(request({ email }));
     userService.login(email, password)
-      .then( user => {
+      .then(user => {
         dispatch(loginSuccess(user));
         localStorage.setItem('user', JSON.stringify(user));
         history.push('/');
+        window.location.reload();
         // this.props.history.push("/");
       })
       .catch(error => {
@@ -45,31 +47,20 @@ function logout() {
   return { type: userConstants.LOGOUT };
 }
 
-function register(user) {
+function register(email, username, password) {
   return dispatch => {
-    dispatch(request(user));
+    dispatch(request({email, username, password}));
 
-    axios({
-      method: 'post',
-      url: "https://api.stormpath.com/v1/tenants/current",
-      auth: {
-        email: 'thanhbinh@gmail.com',
-        password: 'thanhbinh',
-      },
-    }).then(function (response) { console.log(response) })
-
-    // userService.register(user)
-    //   .then(
-    //   user => {
-    //     dispatch(success());
-    //     history.push('/login');
-    //     dispatch(alertActions.success('Registration successful'));
-    //   },
-    //   error => {
-    //     dispatch(failure(error));
-    //     dispatch(alertActions.error(error));
-    //   }
-    //   );
+    userService.register(email, username, password)
+      .then( user => {
+        dispatch(success(user));
+        history.push('/login');
+        dispatch(alertActions.success('Registration successful'));
+      })
+      .catch(error => {
+        dispatch(failure(error.response.data.errors));
+        dispatch(alertActions.error(JSON.stringify(error.response.data.errors)));
+      });
   };
 
   function request(user) {

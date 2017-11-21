@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {bindActionCreators} from 'redux';
 import { userActions } from "../../actions";
 import ContactBG from "../../style/img/contact-bg.jpg";
+import {withRouter} from "react-router-dom";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -103,5 +104,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({loadArticles}, dispatch);
 }
 
-const connectedLoginPage = connect(mapStateToProps)(LoginPage);
-export { connectedLoginPage as LoginPage };
+export default withRouter(connect(mapStateToProps)(LoginPage));

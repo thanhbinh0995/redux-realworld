@@ -5,6 +5,7 @@ import Header from "../common/Header";
 import Nav from "../common/Nav";
 import Footer from "../common/Footer";
 import {loadArticles} from '../../actions/articleAction'
+import {withRouter} from "react-router-dom";
 
 class HomePage extends React.Component {
   componentWillMount(){
@@ -59,5 +60,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({loadArticles}, dispatch);
 }
 
-const connectedHomePage = connect(mapStateToProps, mapDispatchToProps)(HomePage);
-export {connectedHomePage as HomePage};
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePage));

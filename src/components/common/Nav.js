@@ -69,7 +69,6 @@ export default class Nav extends React.Component {
               <i className="fa fa-bars"></i>
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
-            {/* <LoggedOutView /> */}
             {user ? <LoggedInView currentUser={user.data.user} /> : <LoggedOutView />}
           </div>
         </div>

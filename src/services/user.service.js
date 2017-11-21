@@ -12,21 +12,19 @@ export const userService = {
   delete: _delete
 };
 
-function register(user) {
+function register(email, username, password) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user)
   };
-  // const res = await axios.post(`${API_ROOT}/users/login`, { user });  
-  return fetch(`${API_ROOT}/users/login`, requestOptions).then(handleResponse);
+  const user = { username, email, password};  
+  return axios.post(`${API_ROOT}/users`, { user }, requestOptions);
 }
 
 function login(email, password) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
   };
   const user = { email, password };
   return axios.post(`${API_ROOT}/users/login`, { user }, requestOptions);
