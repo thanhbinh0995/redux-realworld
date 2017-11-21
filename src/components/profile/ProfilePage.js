@@ -127,5 +127,4 @@ function mapStateToProps(state) {
   };
 }
 
-const connectedProfilePage = connect(mapStateToProps)(ProfilePage);
-export { connectedProfilePage as ProfilePage };
+export default connect(mapStateToProps)(ProfilePage);

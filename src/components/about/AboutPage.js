@@ -37,5 +37,4 @@ function mapStateToProps(state) {
     user,
   };
 }
-const connectedAboutPage = connect(mapStateToProps)(AboutPage);
-export {connectedAboutPage as AboutPage};
+export default connect(mapStateToProps)(AboutPage);

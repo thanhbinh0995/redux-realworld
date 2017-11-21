@@ -66,5 +66,4 @@ function mapStateToProps(state) {
     user,
   };
 }
-const connectedContactPage = connect(mapStateToProps)(ContactPage);
-export {connectedContactPage as ContactPage};
+export default connect(mapStateToProps)(ContactPage);

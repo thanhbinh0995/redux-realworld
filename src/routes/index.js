@@ -4,10 +4,10 @@ import {PrivateRoute} from "../components/PrivateRoute";
 // import { HomePage } from "../components/home";
 import HomePage from '../components/home/HomePage';
 import LoginPage from "../components/login/LoginPage";
-import { RegisterPage } from "../components/register";
-import { AboutPage } from "../components/about/AboutPage";
-import { ContactPage } from "../components/contact/ContactPage";
-import { ProfilePage } from "../components/profile/ProfilePage";
+import RegisterPage from "../components/register/RegisterPage";
+import AboutPage from "../components/about/AboutPage";
+import ContactPage from "../components/contact/ContactPage";
+import ProfilePage from "../components/profile/ProfilePage";
 
 const TopLevelRoutes = () => (
   <Switch>
