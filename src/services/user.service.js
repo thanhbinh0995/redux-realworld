@@ -12,12 +12,11 @@ export const userService = {
   delete: _delete
 };
 
-function register(email, username, password) {
+function register(user) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   };
-  const user = { username, email, password};  
   return axios.post(`${API_ROOT}/users`, { user }, requestOptions);
 }
 
