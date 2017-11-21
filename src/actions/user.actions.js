@@ -17,8 +17,9 @@ function login(email, password) {
     userService.login(email, password)
       .then( user => {
         dispatch(loginSuccess(user));
+        localStorage.setItem('user', JSON.stringify(user));
         history.push('/');
-        this.props.history.push("/");
+        // this.props.history.push("/");
       })
       .catch(error => {
         dispatch(loginFailure(error.response.data));

@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import Nav from "../common/Nav";
 import Footer from "../common/Footer";
+import { Link } from "react-router-dom";
 
 
 class ProfilePage extends React.Component {
@@ -21,7 +22,7 @@ class ProfilePage extends React.Component {
     return (
         <div>
           <div className="container" style={{paddingTop: "100px"}}>
-            <a href="login">Logout</a>
+            <Link to="/login" className="btn btn-link">Logout</Link>
             <form onSubmit={this.submitForm}>
               <fieldset>
                 <fieldset className="form-group">
