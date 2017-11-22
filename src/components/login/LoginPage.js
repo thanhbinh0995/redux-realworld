@@ -100,8 +100,4 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({loadArticles}, dispatch);
-}
-
 export default withRouter(connect(mapStateToProps)(LoginPage));

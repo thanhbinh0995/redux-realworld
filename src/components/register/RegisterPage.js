@@ -49,7 +49,6 @@ class RegisterPage extends React.Component {
     if (alert.message !== '' && alert.message) {
       message = JSON.parse(alert.message);
     }
-    console.log(message);
     const { user, submitted } = this.state;
     return (
       <div>
