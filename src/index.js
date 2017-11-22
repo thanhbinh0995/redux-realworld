@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import Nav from './components/common/Nav';
 import Footer from './components/common/Footer';
 import Routes from './routes/';
-import { store } from "./helpers";
-
+import { store, history } from "./helpers";
 ReactDOM.render((
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history={history}>
       <div className="app-container">
         <Nav />
         <main>
@@ -17,7 +16,7 @@ ReactDOM.render((
         </main>
         <Footer />
       </div>
-    </BrowserRouter>
+    </Router>
   </Provider>
 ), document.getElementById('root'));
 

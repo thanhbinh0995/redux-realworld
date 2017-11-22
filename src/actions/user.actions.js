@@ -1,7 +1,7 @@
 import { userConstants } from "../constants";
 import { userService } from "../services";
 import { alertActions } from "./";
-import { history } from "../helpers";
+import { history } from "../helpers/history";
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
 const API_ROOT = 'https://conduit.productionready.io/api';
@@ -20,8 +20,6 @@ function login(email, password) {
         dispatch(loginSuccess(user));
         localStorage.setItem('user', JSON.stringify(user));
         history.push('/');
-        window.location.reload();
-        // this.props.history.push("/");
       })
       .catch(error => {
         dispatch(loginFailure(error.response.data));
@@ -44,15 +42,16 @@ function login(email, password) {
 
 function logout() {
   userService.logout();
+  history.push('/login');      
   return { type: userConstants.LOGOUT };
 }
 
-function register(user) {  
+function register(user) {
   return dispatch => {
-    dispatch(request({user}));
+    dispatch(request({ user }));
 
     userService.register(user)
-      .then( user => {
+      .then(user => {
         dispatch(success(user));
         history.push('/login');
         dispatch(alertActions.success('Registration successful'));
