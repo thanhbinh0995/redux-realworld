@@ -9,7 +9,8 @@ export const userService = {
   getAll,
   getById,
   update,
-  delete: _delete
+  delete: _delete,
+  save,
 };
 
 function register(user) {
@@ -32,6 +33,15 @@ function login(email, password) {
 function logout() {
   // remove user from local storage to log user out
   localStorage.removeItem('user');
+}
+
+function save(user) {
+  const requestOptions = {
+    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+  };
+  console.log("user service");
+  console.log(user);
+  return axios.put(`${API_ROOT}/user`, { user }, requestOptions);
 }
 
 function getAll() {
@@ -61,7 +71,6 @@ function update(user) {
   };
 
   return fetch('/users/' + user.id, requestOptions).then(handleResponse);
-  ;
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -72,7 +81,6 @@ function _delete(id) {
   };
 
   return fetch('/users/' + id, requestOptions).then(handleResponse);
-  ;
 }
 
 function handleResponse(response) {

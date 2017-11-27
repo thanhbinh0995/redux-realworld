@@ -14,6 +14,7 @@ class Editor extends React.Component {
         description: '',
         body: ''
       },
+      submitted: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,6 +34,7 @@ class Editor extends React.Component {
 
   handleSubmitForm(event) {
     event.preventDefault();
+    this.setState({ submitted: true });
     const { article } = this.state;
     if (article.title && article.body && article.description) {
       this.props.createArticle(article);
@@ -40,7 +42,7 @@ class Editor extends React.Component {
   }
 
   render() {
-    const { article } = this.state;
+    const { article, submitted } = this.state;
     return (
       <div>
         <header className="masthead" style={{ backgroundImage: 'url(' + Home + ')' }}>
@@ -56,16 +58,25 @@ class Editor extends React.Component {
                         <label htmlFor="title">Title</label>
                         <input type="text" className="form-control" name="title" value={article.title}
                           onChange={this.handleChange} />
+                        {submitted &&
+                          <div className="help-block">Title is required</div>
+                        }
                       </div>
                       <div className={'form-group' + (submitted ? ' has-error' : '')}>
                         <label htmlFor="description">Description</label>
                         <input type="text" className="form-control" name="description" value={article.description}
                           onChange={this.handleChange} />
+                        {submitted &&
+                          <div className="help-block">Description is required</div>
+                        }
                       </div>
                       <div className={'form-group' + (submitted ? ' has-error' : '')}>
                         <label htmlFor="body">Body</label>
                         <input type="text" className="form-control" name="body" value={article.body}
                           onChange={this.handleChange} />
+                        {submitted &&
+                          <div className="help-block">Password is required</div>
+                        }
                       </div>
                       <div className="form-group">
                         <button className="btn btn-primary">Create Post</button>

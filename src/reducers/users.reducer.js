@@ -2,6 +2,12 @@ import {userConstants} from "../constants";
 
 export function users(state = {}, action) {
   switch (action.type) {
+    case userConstants.UPDATE_USER_REQUEST:
+      return {};
+    case userConstants.UPDATE_USER_SUCCESS:
+      return {};
+    case userConstants.UPDATE_USER_FAILURE:
+      return {};
     case userConstants.GETALL_REQUEST:
       return {
         loading: true

@@ -8,9 +8,9 @@ import { withRouter } from "react-router-dom";
 export const userActions = {
   login,
   logout,
-  register
+  register,
+  save,
 };
-
 function login(email, password) {
   return dispatch => {
     dispatch(request({ email }));
@@ -124,5 +124,33 @@ function _delete(id) {
 
   function failure(id, error) {
     return { type: userConstants.DELETE_FAILURE, id, error }
+  }
+}
+
+function save(user) {
+  return dispatch => {
+    dispatch(request({ user }));
+    userService.save(user)
+        .then(user => {
+          dispatch(success(user));
+          history.push('/profile');
+          dispatch(alertActions.success('Update Profile Successful'));
+        })
+        .catch(error => {
+          dispatch(failure("Update profile failure"));
+          dispatch(alertActions.error("Update profile failure"));
+        });
+  };
+
+  function request(user) {
+    return { type: userConstants.UPDATE_USER_REQUEST, user }
+  }
+
+  function success(user) {
+    return { type: userConstants.UPDATE_USER_SUCCESS, user }
+  }
+
+  function failure(error) {
+    return { type: userConstants.UPDATE_USER_FAILURE, error }
   }
 }

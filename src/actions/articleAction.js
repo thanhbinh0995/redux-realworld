@@ -4,6 +4,7 @@ import {alertActions} from "./";
 import {history} from "../helpers/history";
 const API_ROOT = 'https://conduit.productionready.io/api';
 import { withRouter } from "react-router-dom";
+import { authHeader } from "../helpers";
 
 const user = JSON.parse(localStorage.getItem('user'));
 let token = user ? user.data.user.token : null;
@@ -45,8 +46,8 @@ export function createArticle(article) {
     const requestOptions = {
       method: 'POST',
       headers: {
+          ...authHeader(),
         'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`,
       },
     };
     return axios.post(`${API_ROOT}/articles`, {article}, requestOptions)

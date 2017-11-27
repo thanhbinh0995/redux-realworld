@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Switch, Route } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import Nav from './components/common/Nav';
 import Footer from './components/common/Footer';
 import Routes from './routes/';
