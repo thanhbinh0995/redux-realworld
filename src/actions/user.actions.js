@@ -4,7 +4,6 @@ import { alertActions } from "./";
 import { history } from "../helpers/history";
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
-const API_ROOT = 'https://conduit.productionready.io/api';
 
 export const userActions = {
   login,

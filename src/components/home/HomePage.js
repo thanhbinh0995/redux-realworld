@@ -1,18 +1,23 @@
 import React from "react";
 import {connect} from "react-redux";
-import {bindActionCreators} from 'redux';
+import {bindActionCreators} from "redux";
 import Header from "../common/Header";
-import Nav from "../common/Nav";
-import Footer from "../common/Footer";
-import {loadArticles} from '../../actions/articleAction'
+import {loadArticles} from "../../actions/articleAction";
+import {withRouter} from "react-router-dom";
 
 class HomePage extends React.Component {
-  componentWillMount(){
+  componentWillMount() {
     this.props.loadArticles();
   }
 
   renderArticles(articles) {
-    return articles.map((article, index) => {
+    if (articles.length == 0) {
+      return (
+          <div>
+            Loading ...
+          </div>
+      )
+    } else return articles.map((article, index) => {
       return (
           <div className="post-preview" key={index}>
             <a href="/article">
@@ -27,6 +32,7 @@ class HomePage extends React.Component {
 
   render() {
     const {user, articles} = this.props;
+    console.log(user);
     return (
         <div>
           <Header component="Home" title="Clean Blog" subheading="A Blog Theme by Start Bootstrap"/>
@@ -59,4 +65,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({loadArticles}, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePage));

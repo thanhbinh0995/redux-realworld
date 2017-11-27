@@ -1,18 +1,22 @@
 import * as types from "../constants/articles.constants";
 import axios from "axios";
-import { alertActions } from "./";
-import { history } from "../helpers/history";
+import {alertActions} from "./";
+import {history} from "../helpers/history";
 const API_ROOT = 'https://conduit.productionready.io/api';
+import { withRouter } from "react-router-dom";
+
+const user = JSON.parse(localStorage.getItem('user'));
+let token = user ? user.data.user.token : null;
 
 export function loadArticles() {
   return (dispatch) => {
     const url = `${API_ROOT}/articles?limit=10`;
     return axios.get(url)
-      .then(request => {
-        dispatch(loadArticlesSuccess(request.data.articles));
-      }).catch(error => {
-        dispatch(loadArticlesError(error));
-      });
+        .then(request => {
+          dispatch(loadArticlesSuccess(request.data.articles));
+        }).catch(error => {
+          dispatch(loadArticlesError(error));
+        });
   }
 }
 
@@ -37,24 +41,26 @@ export function loadArticlesByUser(user) {
 
 export function createArticle(article) {
   return dispatch => {
-    dispatch(request({ article }));
+    dispatch(request({article}));
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+      },
     };
-    console.log(article);
-    return axios.post(`${API_ROOT}/articles`, { article }, requestOptions)
-      .then(request => {
-        dispatch(createArticleSuccess(request.data.article));
-        history.push('/');
-        dispatch(alertActions.success('Create Post Completed'));
-      }).catch(error => {
-        dispatch(createArticleError("Create Post Failure"));
-        dispatch(alertActions.error("Create Post Failure"));
-      });
-  }
+    return axios.post(`${API_ROOT}/articles`, {article}, requestOptions)
+        .then(request => {
+          dispatch(createArticleSuccess(request.data.article));
+          history.push('/');
+          dispatch(alertActions.success('Create Post Completed'));
+        }).catch(error => {
+          dispatch(createArticleError("Create Post Failure"));
+          dispatch(alertActions.error("Create Post Failure"));
+        });
+  };
   function request(article) {
-    return { type: types.REQUEST_CREATE_ARTICLE, article }
+    return {type: types.REQUEST_CREATE_ARTICLE, article}
   }
 
   function createArticleSuccess(article) {

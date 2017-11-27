@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { createArticle } from "../../actions/articleAction";
 import Home from "../../style/img/home-bg.jpg";
+import {withRouter} from "react-router-dom";
 
 class Editor extends React.Component {
   constructor(props) {
@@ -13,7 +14,6 @@ class Editor extends React.Component {
         description: '',
         body: ''
       },
-      submitted: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,8 +33,6 @@ class Editor extends React.Component {
 
   handleSubmitForm(event) {
     event.preventDefault();
-    console.log("tesasdfdft");
-    this.setState({ submitted: true });
     const { article } = this.state;
     if (article.title && article.body && article.description) {
       this.props.createArticle(article);
@@ -42,7 +40,7 @@ class Editor extends React.Component {
   }
 
   render() {
-    const { article, submitted } = this.state;
+    const { article } = this.state;
     return (
       <div>
         <header className="masthead" style={{ backgroundImage: 'url(' + Home + ')' }}>
@@ -52,31 +50,22 @@ class Editor extends React.Component {
               <div className="col-lg-10 col-md-10 mx-auto">
                 <div className="page-body">
                   <div className="container" style={{ padding: "100px 0" }}>
-                    <h2>Register</h2>
+                    <h2>Create New Post</h2>
                     <form name="formSubmit" onSubmit={this.handleSubmitForm}>
                       <div className={'form-group' + (submitted ? ' has-error' : '')}>
                         <label htmlFor="title">Title</label>
                         <input type="text" className="form-control" name="title" value={article.title}
                           onChange={this.handleChange} />
-                        {submitted &&
-                          <div className="help-block">Title is required</div>
-                        }
                       </div>
                       <div className={'form-group' + (submitted ? ' has-error' : '')}>
                         <label htmlFor="description">Description</label>
                         <input type="text" className="form-control" name="description" value={article.description}
                           onChange={this.handleChange} />
-                        {submitted &&
-                          <div className="help-block">Description is required</div>
-                        }
                       </div>
                       <div className={'form-group' + (submitted ? ' has-error' : '')}>
                         <label htmlFor="body">Body</label>
                         <input type="text" className="form-control" name="body" value={article.body}
                           onChange={this.handleChange} />
-                        {submitted &&
-                          <div className="help-block">Password is required</div>
-                        }
                       </div>
                       <div className="form-group">
                         <button className="btn btn-primary">Create Post</button>
@@ -104,4 +93,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ createArticle }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Editor));
