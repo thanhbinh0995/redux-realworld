@@ -12,8 +12,8 @@ import Editor from "../components/article/Editor";
 const TopLevelRoutes = () => (
   <Switch>
     <PrivateRoute exact path="/" component={HomePage} />
-    <PrivateRoute path="/profile" component={ProfilePage} />   
-    <PrivateRoute path="/post" component={Editor} /> 
+    <PrivateRoute path="/profile" component={ProfilePage} />
+    <PrivateRoute path="/post" component={Editor} />
     <Route exact path="/login" component={LoginPage} />
     <Route exact path="/register" component={RegisterPage} />
     <Route path="/about" component={AboutPage} />

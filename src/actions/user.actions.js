@@ -1,139 +1,91 @@
-import { userConstants } from "../constants";
-import { userService } from "../services";
-import { alertActions } from "./";
-import { history } from "../helpers/history";
-import axios from 'axios';
-import { withRouter } from "react-router-dom";
+import {userConstants} from "../constants";
+import {userService} from "../services";
+import {alertActions} from "./";
+import {history} from "../helpers/history";
+import axios from "axios";
+const API_ROOT = 'https://conduit.productionready.io/api';
+import { authHeader } from "../helpers";
 
 export const userActions = {
   login,
   logout,
   register,
   save,
+  getCurrentUser,
 };
 function login(email, password) {
   return dispatch => {
-    dispatch(request({ email }));
+    dispatch(request({email}));
     userService.login(email, password)
-      .then(user => {
-        dispatch(loginSuccess(user));
-        localStorage.setItem('user', JSON.stringify(user));
-        history.push('/');
-      })
-      .catch(error => {
-        dispatch(loginFailure(error.response.data));
-        dispatch(alertActions.error("Email or password not correct"));
-      });
+        .then(request => {
+          dispatch(loginSuccess(request.data.user));
+          localStorage.setItem('user', JSON.stringify(request.data.user));
+          history.push('/');
+        })
+        .catch(error => {
+          dispatch(loginFailure(error.response.data));
+          dispatch(alertActions.error("Email or password not correct"));
+        });
   };
 
   function request(user) {
-    return { type: userConstants.LOGIN_REQUEST, user }
+    return {type: userConstants.LOGIN_REQUEST, user}
   }
 
   function loginSuccess(user) {
-    return { type: userConstants.LOGIN_SUCCESS, user }
+    return {type: userConstants.LOGIN_SUCCESS, user}
   }
 
   function loginFailure(error) {
-    return { type: userConstants.LOGIN_FAILURE, error }
+    return {type: userConstants.LOGIN_FAILURE, error}
   }
 }
 
 function logout() {
   userService.logout();
-  history.push('/login');      
-  return { type: userConstants.LOGOUT };
+  history.push('/login');
+  return {type: userConstants.LOGOUT};
 }
 
 function register(user) {
   return dispatch => {
-    dispatch(request({ user }));
+    dispatch(request({user}));
 
     userService.register(user)
-      .then(user => {
-        dispatch(success(user));
-        history.push('/login');
-        dispatch(alertActions.success('Registration successful'));
-      })
-      .catch(error => {
-        dispatch(failure(error.response.data.errors));
-        dispatch(alertActions.error(JSON.stringify(error.response.data.errors)));
-      });
+        .then(user => {
+          dispatch(success(user));
+          history.push('/login');
+          dispatch(alertActions.success('Registration successful'));
+        })
+        .catch(error => {
+          dispatch(failure(error.response.data.errors));
+          dispatch(alertActions.error(JSON.stringify(error.response.data.errors)));
+        });
   };
 
   function request(user) {
-    return { type: userConstants.REGISTER_REQUEST, user }
+    return {type: userConstants.REGISTER_REQUEST, user}
   }
 
   function success(user) {
-    return { type: userConstants.REGISTER_SUCCESS, user }
+    return {type: userConstants.REGISTER_SUCCESS, user}
   }
 
   function failure(error) {
-    return { type: userConstants.REGISTER_FAILURE, error }
-  }
-}
-
-function getAll() {
-  return dispatch => {
-    dispatch(request());
-
-    userService.getAll()
-      .then(
-      users => dispatch(success(users)),
-      error => dispatch(failure(error))
-      );
-  };
-
-  function request() {
-    return { type: userConstants.GETALL_REQUEST }
-  }
-
-  function success(users) {
-    return { type: userConstants.GETALL_SUCCESS, users }
-  }
-
-  function failure(error) {
-    return { type: userConstants.GETALL_FAILURE, error }
-  }
-}
-
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-  return dispatch => {
-    dispatch(request(id));
-
-    userService.delete(id)
-      .then(
-      user => {
-        dispatch(success(id));
-      },
-      error => {
-        dispatch(failure(id, error));
-      }
-      );
-  };
-
-  function request(id) {
-    return { type: userConstants.DELETE_REQUEST, id }
-  }
-
-  function success(id) {
-    return { type: userConstants.DELETE_SUCCESS, id }
-  }
-
-  function failure(id, error) {
-    return { type: userConstants.DELETE_FAILURE, id, error }
+    return {type: userConstants.REGISTER_FAILURE, error}
   }
 }
 
 function save(user) {
-  return dispatch => {
-    dispatch(request({ user }));
-    userService.save(user)
+  return async dispatch => {
+    dispatch(request({user}));
+    const requestOptions = {
+      headers: {...authHeader(), 'Content-Type': 'application/json'},
+    };
+    const req = await axios.put(`${API_ROOT}/user`, {user}, requestOptions)
         .then(user => {
           dispatch(success(user));
-          history.push('/profile');
+          history.push('/');
           dispatch(alertActions.success('Update Profile Successful'));
         })
         .catch(error => {
@@ -143,14 +95,89 @@ function save(user) {
   };
 
   function request(user) {
-    return { type: userConstants.UPDATE_USER_REQUEST, user }
+    return {type: userConstants.UPDATE_USER_REQUEST, user}
   }
 
   function success(user) {
-    return { type: userConstants.UPDATE_USER_SUCCESS, user }
+    return {type: userConstants.UPDATE_USER_SUCCESS, user}
   }
 
   function failure(error) {
-    return { type: userConstants.UPDATE_USER_FAILURE, error }
+    return {type: userConstants.UPDATE_USER_FAILURE, error}
   }
 }
+
+export function getCurrentUser() {
+  return dispatch => {
+    userService.current()
+        .then(request => {
+          dispatch(success(request.data.user));
+        })
+        .catch(error => {
+          dispatch(failure("Cannot get Current User"));
+        });
+  };
+
+  function success(user) {
+    return {type: userConstants.GET_CURRENT_USER_SUCCESS, user}
+  }
+
+  function failure(error) {
+    return {type: userConstants.GET_CURRENT_USER_FAILURE, error}
+  }
+}
+
+
+function getAll() {
+  return dispatch => {
+    dispatch(request());
+
+    userService.getAll()
+        .then(
+            users => dispatch(success(users)),
+            error => dispatch(failure(error))
+        );
+  };
+
+  function request() {
+    return {type: userConstants.GETALL_REQUEST}
+  }
+
+  function success(users) {
+    return {type: userConstants.GETALL_SUCCESS, users}
+  }
+
+  function failure(error) {
+    return {type: userConstants.GETALL_FAILURE, error}
+  }
+}
+
+// prefixed function name with underscore because delete is a reserved word in javascript
+function _delete(id) {
+  return dispatch => {
+    dispatch(request(id));
+
+    userService.delete(id)
+        .then(
+            user => {
+              dispatch(success(id));
+            },
+            error => {
+              dispatch(failure(id, error));
+            }
+        );
+  };
+
+  function request(id) {
+    return {type: userConstants.DELETE_REQUEST, id}
+  }
+
+  function success(id) {
+    return {type: userConstants.DELETE_SUCCESS, id}
+  }
+
+  function failure(id, error) {
+    return {type: userConstants.DELETE_FAILURE, id, error}
+  }
+}
+

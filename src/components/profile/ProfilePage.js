@@ -22,39 +22,39 @@ class ProfilePage extends React.Component {
     this.submitForm = ev => {
       ev.preventDefault();
       const user = Object.assign({}, this.state);
+      const { dispatch } = this.props;
       if (!user.password) {
         delete user.password;
       }
-      const { dispatch } = this.props;
       dispatch(userActions.save(user));
+      dispatch(userActions.getCurrentUser());
     };
   }
 
   componentWillMount() {
-    if (this.props.user.data.user) {
+    if (this.props.currentUser) {
       Object.assign(this.state, {
-        image: this.props.user.data.user.image || '',
-        username: this.props.user.data.user.username,
-        bio: this.props.user.data.user.bio,
-        email: this.props.user.data.user.email
+        image: this.props.currentUser.image || '',
+        username: this.props.currentUser.username,
+        bio: this.props.currentUser.bio,
+        email: this.props.currentUser.email
       });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
-    if (nextProps.user) {
+    if (nextProps.currentUser) {
       this.setState(Object.assign({}, this.state, {
-        image: nextProps.user.image || '',
-        username: nextProps.user.username,
-        bio: nextProps.user.bio,
-        email: nextProps.user.email
+        image: nextProps.currentUser.image || '',
+        username: nextProps.currentUser.username,
+        bio: nextProps.currentUser.bio,
+        email: nextProps.currentUser.email
       }));
     }
   }
 
   render() {
-    const {user} = this.props.user.data;
     return (
         <div>
           <div className="container" style={{paddingTop: "100px"}}>
@@ -117,9 +117,9 @@ class ProfilePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const {user} = state.authentication;
+  const {currentUser} = state.authentication;
   return {
-    user
+    currentUser,
   };
 }
 

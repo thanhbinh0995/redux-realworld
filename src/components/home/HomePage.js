@@ -4,14 +4,16 @@ import {bindActionCreators} from "redux";
 import Header from "../common/Header";
 import {loadArticles} from "../../actions/articleAction";
 import {withRouter} from "react-router-dom";
+import {getCurrentUser} from "../../actions/user.actions";
 
 class HomePage extends React.Component {
   componentWillMount() {
     this.props.loadArticles();
+    this.props.getCurrentUser();
   }
 
   renderArticles(articles) {
-    if (articles.length == 0) {
+    if (articles.length === 0) {
       return (
           <div>
             Loading ...
@@ -31,8 +33,7 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const {user, articles} = this.props;
-    console.log(user);
+    const {articles} = this.props;
     return (
         <div>
           <Header component="Home" title="Clean Blog" subheading="A Blog Theme by Start Bootstrap"/>
@@ -53,16 +54,15 @@ class HomePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const {authentication, articles} = state;
-  const {user} = authentication;
+  const {articles, authentication} = state;
+  console.log(authentication);
   return {
-    user,
     articles
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({loadArticles}, dispatch);
+  return bindActionCreators({loadArticles, getCurrentUser}, dispatch);
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePage));

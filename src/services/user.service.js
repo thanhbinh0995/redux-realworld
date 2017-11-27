@@ -10,7 +10,8 @@ export const userService = {
   getById,
   update,
   delete: _delete,
-  save,
+  // save,
+  current,
 };
 
 function register(user) {
@@ -35,13 +36,19 @@ function logout() {
   localStorage.removeItem('user');
 }
 
-function save(user) {
+// function save(user) {
+//   const requestOptions = {
+//     headers: { ...authHeader(), 'Content-Type': 'application/json' },
+//   };
+//   const req = await axios.put(`${API_ROOT}/user`, { user }, requestOptions);
+//   return req;
+// }
+
+function current() {
   const requestOptions = {
     headers: { ...authHeader(), 'Content-Type': 'application/json' },
   };
-  console.log("user service");
-  console.log(user);
-  return axios.put(`${API_ROOT}/user`, { user }, requestOptions);
+  return axios.get(`${API_ROOT}/user`, requestOptions);
 }
 
 function getAll() {

@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { authHeader } from "../helpers";
 
 const user = JSON.parse(localStorage.getItem('user'));
-let token = user ? user.data.user.token : null;
+let token = user ? user.token : null;
 
 export function loadArticles() {
   return (dispatch) => {

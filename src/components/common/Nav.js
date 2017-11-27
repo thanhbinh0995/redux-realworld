@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {connect} from "react-redux";
+import {userActions} from "../../actions/user.actions";
 
 const LoggedOutView = props => {
   if (!props.currentUser) {
@@ -55,9 +57,14 @@ const LoggedInView = props => {
   return null;
 };
 
-export default class Nav extends React.Component {
+class Nav extends React.Component {
+  constructor(props) {
+    super(props);
+    const { dispatch } = this.props;
+    dispatch(userActions.getCurrentUser());
+  }
   render() {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const currentUser = this.props.currentUser;
     return (
       <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div className="container">
@@ -69,10 +76,17 @@ export default class Nav extends React.Component {
               <i className="fa fa-bars"></i>
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
-            {user ? <LoggedInView currentUser={user.data.user} /> : <LoggedOutView />}
+            {currentUser ? <LoggedInView currentUser={currentUser} /> : <LoggedOutView />}
           </div>
         </div>
       </nav>
     );
   }
 }
+function mapStateToProps(state) {
+  const {currentUser} = state.authentication;
+  return {
+    currentUser
+  };
+}
+export default connect(mapStateToProps)(Nav);
