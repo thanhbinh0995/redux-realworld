@@ -6,6 +6,11 @@ import Nav from './components/common/Nav';
 import Footer from './components/common/Footer';
 import Routes from './routes/';
 import { store, history } from "./helpers";
+import './style/vendor/bootstrap/css/bootstrap.min.css';
+import './style/vendor/font-awesome/css/font-awesome.min.css';
+import './style/css/clean-blog.min.css';
+import './style/css/style.css';
+
 ReactDOM.render((
   <Provider store={store}>
     <Router history={history}>

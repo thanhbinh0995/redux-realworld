@@ -5,6 +5,7 @@ import Header from "../common/Header";
 import {loadArticles} from "../../actions/articleAction";
 import {withRouter} from "react-router-dom";
 import {getCurrentUser} from "../../actions/user.actions";
+import { Link } from 'react-router-dom';
 
 class HomePage extends React.Component {
   componentWillMount() {
@@ -22,11 +23,11 @@ class HomePage extends React.Component {
     } else return articles.map((article, index) => {
       return (
           <div className="post-preview" key={index}>
-            <a href="/article">
+            <Link to={`/article/${article.slug}`} className="preview-link">
               <h2 className="post-title">{article.title}</h2>
               <h3 className="post-subtitle">{article.description}</h3>
-            </a>
-            <p className="post-meta">Posted by <a href="#">{article.author.username}</a> on {article.createdAt}</p>
+            </Link>
+            <p className="post-meta">Posted by <a href="#">{article.author.username}</a> on {new Date(article.createdAt).toUTCString()}</p>
           </div>
       );
     });
@@ -54,8 +55,7 @@ class HomePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const {articles, authentication} = state;
-  console.log(authentication);
+  const {articles} = state;
   return {
     articles
   };

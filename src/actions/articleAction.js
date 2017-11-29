@@ -78,3 +78,30 @@ export function createArticle(article) {
     };
   }
 }
+
+export function getArticle(slug) {
+  return (dispatch) => {
+    const url = `${API_ROOT}/articles/${slug}`;
+    return axios.get(url)
+        .then(request => {
+          dispatch(getArticleSuccess(request.data.article));
+        }).catch(error => {
+          dispatch(getArticleError(error));
+        });
+  }
+}
+
+export function getArticleSuccess(article) {
+  return {
+    type: types.GET_ARTICLE_SUCCESS,
+    payload: article
+  };
+}
+
+export function getArticleError(error) {
+  return {
+    type: types.GET_ARTICLE_ERROR,
+    payload: error
+  };
+}
+
