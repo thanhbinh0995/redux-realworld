@@ -36,7 +36,7 @@ export function loadArticlesError(error) {
 }
 
 export function loadArticlesByUser(user) {
-  const url = `${API_ROOT}/articles?author=thanhbinh`;
+  const url = `${API_ROOT}/articles?author=${user}`;
   const request = axios.get(url);
 }
 

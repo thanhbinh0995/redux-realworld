@@ -75,7 +75,7 @@ class Editor extends React.Component {
                         <input type="text" className="form-control" name="body" value={article.body}
                           onChange={this.handleChange} />
                         {submitted &&
-                          <div className="help-block">Password is required</div>
+                          <div className="help-block">Body is required</div>
                         }
                       </div>
                       <div className="form-group">

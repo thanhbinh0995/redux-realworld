@@ -54,15 +54,15 @@ class HomePage extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   const {articles} = state;
   return {
     articles
   };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return bindActionCreators({loadArticles, getCurrentUser}, dispatch);
-}
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePage));

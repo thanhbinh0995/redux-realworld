@@ -10,7 +10,6 @@ export const userService = {
   getById,
   update,
   delete: _delete,
-  // save,
   current,
 };
 
@@ -35,14 +34,6 @@ function logout() {
   // remove user from local storage to log user out
   localStorage.removeItem('user');
 }
-
-// function save(user) {
-//   const requestOptions = {
-//     headers: { ...authHeader(), 'Content-Type': 'application/json' },
-//   };
-//   const req = await axios.put(`${API_ROOT}/user`, { user }, requestOptions);
-//   return req;
-// }
 
 function current() {
   const requestOptions = {
