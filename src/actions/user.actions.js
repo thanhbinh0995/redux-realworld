@@ -12,6 +12,7 @@ export const userActions = {
     register,
     save,
     getCurrentUser,
+    getAll
 };
 function login(user) {
     return dispatch => {
@@ -129,10 +130,9 @@ export function getCurrentUser() {
 }
 
 
-function getAll() {
+export function getAll() {
     return dispatch => {
         dispatch(request());
-
         userService.getAll()
             .then(
                 users => dispatch(success(users)),

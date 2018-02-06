@@ -41,7 +41,10 @@ function logout() {
 function current() {
     const requestOptions = {
         method: 'GET',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': authHeader()
+        },
     };
     const user = JSON.parse(localStorage.getItem('user'));
     if (user && user.id) {
@@ -54,10 +57,9 @@ function current() {
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader()
+        headers: {'Authorization': authHeader()},
     };
-
-    return fetch('/users/index', requestOptions).then(handleResponse);
+    return axios.get(`${API_ROOT}/users/index`, requestOptions);
 }
 
 function getById(id) {
@@ -68,7 +70,6 @@ function getById(id) {
 
     return fetch('/users/' + id, requestOptions).then(handleResponse);
 }
-
 
 function update(user) {
     const requestOptions = {

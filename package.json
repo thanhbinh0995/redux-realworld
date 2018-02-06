@@ -33,9 +33,11 @@
     "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
+    "@kadira/storybook": "^2.35.3",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
     "css-loader": "^0.28.7",
+    "hammerjs": "^2.0.8",
     "history": "^4.6.3",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",

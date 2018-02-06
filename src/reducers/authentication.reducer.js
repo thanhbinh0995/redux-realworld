@@ -17,7 +17,6 @@ export function authentication(state = {}, action) {
     case userConstants.LOGOUT:
       return {};
     case userConstants.GET_CURRENT_USER_SUCCESS:
-      console.log(action);
       return {...state, currentUser: action.user};
     case userConstants.GET_CURRENT_USER_FAILURE:
       return {};
