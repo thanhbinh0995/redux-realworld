@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Hammer from "hammerjs";
 import ReactDOM from "react-dom";
 import SimpleCard from "./SimpleCard";
-import {translate3d} from "./utils";
+import {translate3d, getBackgroundImage} from "./utils";
 
 class DraggableCard extends Component {
     constructor(props) {
@@ -123,8 +123,7 @@ class DraggableCard extends Component {
 
     render() {
         const {x, y, animation, pristine} = this.state;
-        const style = translate3d(x, y);
-        console.log(this.props.image);
+        const style = Object.assign({}, translate3d(x, y), getBackgroundImage(this.props.avatar));
         return <SimpleCard {...this.props} style={style}
                            className={animation ? 'animate' : pristine ? 'inactive' : '' }/>
     }

@@ -11,6 +11,8 @@ export const userService = {
     update,
     delete: _delete,
     current,
+    getGroupsByUser,
+    getMessagesByGroup,
 };
 
 function register(user) {
@@ -54,12 +56,41 @@ function current() {
     }
 }
 
+function getGroupsByUser() {
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': authHeader()
+        },
+    };
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user);
+    if (user && user.id) {
+        return axios.get(`${API_ROOT}/groups/${user.id}`, requestOptions);
+    } else {
+        return null;
+    }
+}
+
+function getMessagesByGroup(groupId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': authHeader()
+        },
+    };
+    return axios.get(`${API_ROOT}/message/${groupId}`, requestOptions);
+}
+
 function getAll() {
+    const user = JSON.parse(localStorage.getItem('user'));
     const requestOptions = {
         method: 'GET',
         headers: {'Authorization': authHeader()},
     };
-    return axios.get(`${API_ROOT}/users/index`, requestOptions);
+    return axios.get(`${API_ROOT}/users/index?sex=${user.sex}`, requestOptions);
 }
 
 function getById(id) {

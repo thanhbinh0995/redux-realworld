@@ -7,7 +7,6 @@ const CustomAlertLeft = () => <span>Dislike</span>;
 const CustomAlertRight = () => <span>Like</span>;
 
 const SwipeCard = ({users}) => {
-    console.log(users);
     return (
         <div>
             <Cards
@@ -18,10 +17,10 @@ const SwipeCard = ({users}) => {
                 {users.map((user, key) =>
                     <Card
                         key={key}
-                        image={}
+                        avatar={user.avatar}
                         onSwipeLeft={action('swipe left')}
                         onSwipeRight={action('swipe right')}>
-                        <h2>{user.username}</h2>
+                        <h2 className="username">{user.username}</h2>
                     </Card>
                 )}
             </Cards>

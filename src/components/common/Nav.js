@@ -11,12 +11,6 @@ const LoggedOutView = props => {
           <Link className="nav-link" to="/">Home</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/about">About</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/contact">Contact</Link>
-        </li>
-        <li className="nav-item">
           <Link className="nav-link" to="/login">Sign In</Link>
         </li>
         <li className="nav-item">
@@ -36,13 +30,7 @@ const LoggedInView = props => {
           <Link className="nav-link" to="/">Home</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/about">About</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/contact">Contact</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/post">New Post</Link>
+          <Link className="nav-link" to="/chat">Chatting</Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/profile">({props.currentUser.username})Profile</Link>
@@ -64,7 +52,7 @@ class Nav extends React.Component {
   render() {
     const currentUser = this.props.currentUser;
     return (
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <nav className="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div className="container">
           <a className="navbar-brand" href="/">Start Bootstrap</a>
           <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
